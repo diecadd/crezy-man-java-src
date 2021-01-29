@@ -12,7 +12,6 @@ public class StringUtils {
 		return name;
 
 	}
-
 	public static boolean isAcronym(String word) {
 		for (int i = 0; i < word.length(); i++) {
 			char c = word.charAt(i);
