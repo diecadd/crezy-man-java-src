@@ -21,7 +21,7 @@ import com.crezyman.utils.StringUtils;
 
 
 @SuppressWarnings("finally")
-public class CrezyManDao extends AbstractBaseDaoImpl implements ModelDao {
+public class CrezyManDAO extends AbstractBaseDaoImpl implements ModelDao {
 	
 	private static String PK;
 	private static String UPDATE_FIELDS;
@@ -29,7 +29,7 @@ public class CrezyManDao extends AbstractBaseDaoImpl implements ModelDao {
 	private static String[] SELECT_FIELDS;
 	private static String SELECT_FIELDS_TOSTRING;
 
-	public CrezyManDao(Connection connection) throws Exception {
+	public CrezyManDAO(Connection connection) throws Exception {
 		super(connection);
 		List<String> o = super.getTableFields();
 		PK = (String) o.get(0);
