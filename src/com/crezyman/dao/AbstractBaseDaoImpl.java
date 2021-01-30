@@ -311,7 +311,7 @@ public abstract class AbstractBaseDaoImpl implements IBaseDao {
 
 	public static Map<String, Object> getOrmTable(String tableName) throws Exception {
 		Map<String, Object> rst = new HashMap<>();
-		String entityPackage = getDomainPackage();
+		String entityPackage = getDomainPackage("java1121.domain").trim();
 		List<Class<?>> classes = ClazzUtils.getClasses(entityPackage);
 
 		for (Class<?> class1 : classes) {
@@ -327,7 +327,7 @@ public abstract class AbstractBaseDaoImpl implements IBaseDao {
 		return rst;
 	}
 
-	public static String getDomainPackage() {
+	public static String getDomainPackage(String key) {
 		Properties params = new Properties();
 		String configFile = "application.properties";
 		InputStream is = DataSourceUtil.class.getClassLoader().getResourceAsStream(configFile);
@@ -336,7 +336,7 @@ public abstract class AbstractBaseDaoImpl implements IBaseDao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return params.getProperty("tBatis.domain");
+		return params.getProperty(key);
 	}
 
 	public static Class<?> getInstanceToClass(String className) throws Exception {

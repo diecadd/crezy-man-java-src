@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.sql.DataSource;
+
+import com.crezyman.dao.AbstractBaseDaoImpl;
+
 import java.util.Properties;
 
 public class DataSourceUtil {
@@ -15,7 +18,6 @@ public class DataSourceUtil {
 	private static String url;
 	private static String user;
 	private static String password;
-	private static String databaseConfigFile;
 	
 	static {
 		init();
@@ -23,7 +25,9 @@ public class DataSourceUtil {
 	
 	public static void init(){
 		Properties params=new Properties();
-		String configFile = getDatabaseConfigFile();
+		String configFile = AbstractBaseDaoImpl.getDomainPackage("crezyman.databaseConfigFileName").trim();
+		
+		
 		InputStream is=DataSourceUtil.class.getClassLoader().getResourceAsStream(configFile);
 		try {
 			params.load(is);
@@ -31,10 +35,10 @@ public class DataSourceUtil {
 			e.printStackTrace();
 		}
 		
-		driver=params.getProperty("crezyman.driver");
-		url=params.getProperty("crezyman.url");
-		user=params.getProperty("crezyman.username");
-		password=params.getProperty("crezyman.password");
+		driver=params.getProperty("crezyman.driver").trim();
+		url=params.getProperty("crezyman.url").trim();
+		user=params.getProperty("crezyman.username").trim();
+		password=params.getProperty("crezyman.password").trim();
 	}   
 
 	public static Connection openConnection() throws SQLException {
@@ -58,15 +62,4 @@ public class DataSourceUtil {
 			e.printStackTrace();
 		}
 	}
-
-	public static String getDatabaseConfigFile() {
-		return databaseConfigFile;
-	}
-
-	public static void setDatabaseConfigFile(String databaseConfigFile) {
-		DataSourceUtil.databaseConfigFile = databaseConfigFile;
-	}
-	
-	
-	
 }
