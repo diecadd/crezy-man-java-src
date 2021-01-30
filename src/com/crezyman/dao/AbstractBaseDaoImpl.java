@@ -153,6 +153,7 @@ public abstract class AbstractBaseDaoImpl implements IBaseDao {
 		Map<String, Object> sortParams = params.getSortParams();
 		Map<String, Object> updateParams = params.getUpdateParams();
 		Map<String, List<Integer>> betweenParams = params.getBetweenParams();
+		Map<String, List<Integer>> inParams = params.getInParams();
 
 		boolean isOpenPage = params.isOpenPager();
 		int startIndex = params.getStartIndex();
@@ -168,6 +169,8 @@ public abstract class AbstractBaseDaoImpl implements IBaseDao {
 		Iterator<Entry<String, Object>> itrUpdate = update.iterator();
 		Set<Entry<String, List<Integer>>> between = betweenParams.entrySet();
 		Iterator<Entry<String, List<Integer>>> itrBetween = between.iterator();
+		Set<Entry<String,List<Integer>>> in = inParams.entrySet();
+		Iterator<Entry<String, List<Integer>>> itrIn = between.iterator();
 
 		if (selectParams.size() > 0) {
 			while (itr.hasNext()) {
@@ -195,6 +198,15 @@ public abstract class AbstractBaseDaoImpl implements IBaseDao {
 				if (EmptyUtils.isNotEmpty(keyOfValue.getKey())) {
 					sql.append(" and " + keyOfValue.getKey() + " BETWEEN " + keyOfValue.getValue().get(0) + " and "
 							+ keyOfValue.getValue().get(1));
+				}
+			}
+		}
+		
+		if(in.size() > 0) {
+			while(itrIn.hasNext()) {
+				Entry<String, List<Integer>> keyOfValue = itrIn.next();
+				if (EmptyUtils.isNotEmpty(keyOfValue.getKey())) {
+					sql.append(" and ").append(keyOfValue.getKey()).append("(").append(keyOfValue.getValue().toString().substring(1, keyOfValue.getValue().toString().length() - 1)).append(")");
 				}
 			}
 		}

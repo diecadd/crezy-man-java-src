@@ -15,6 +15,7 @@ public class Params implements Serializable {
 	private Map<String, Object> sortParams;
 	private Map<String, Object> addParams;
 	private Map<String, List<Integer>> betweenParams;
+	private Map<String, List<Integer>> inParams;
 
 	private int startIndex;
 
@@ -29,6 +30,7 @@ public class Params implements Serializable {
 		addParams = new HashMap<String, Object>();
 		likeParams = new HashMap<String, Object>();
 		betweenParams = new HashMap<String, List<Integer>>();
+		inParams = new HashMap<String,List<Integer>>();
 
 	}
 
@@ -40,6 +42,7 @@ public class Params implements Serializable {
 		addParams = new HashMap<String, Object>();
 		likeParams = new HashMap<String, Object>();
 		betweenParams = new HashMap<String, List<Integer>>();
+		inParams = new HashMap<String,List<Integer>>();
 	}
 
 	public Params addBetween(String column, List<Integer> value) {
@@ -164,4 +167,13 @@ public class Params implements Serializable {
 		this.betweenParams = betweenParams;
 	}
 
+	public Map<String, List<Integer>> getInParams() {
+		return inParams;
+	}
+
+	public void setInParams(Map<String, List<Integer>> inParams) {
+		this.inParams = inParams;
+	}
+
+	
 }
