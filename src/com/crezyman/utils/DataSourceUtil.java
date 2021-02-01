@@ -12,13 +12,13 @@ import com.crezyman.dao.AbstractBaseDaoImpl;
 
 import java.util.Properties;
 
+/**
+ *  升级了阿里的Druid数据库连接池
+ * @author 10947
+ *
+ */
 public class DataSourceUtil {
 	private static DataSource dataSource;
-	
-	private static String driver;
-	private static String url;
-	private static String user;
-	private static String password;
 	
 	static {
 		try {
@@ -48,7 +48,6 @@ public class DataSourceUtil {
 	public static Connection openConnection() throws SQLException {
 		Connection connection = null;
 		try {
-			Class.forName(driver);
 			connection = dataSource.getConnection();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
