@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.crezyman.dao.AbstractBaseDaoImpl;
 
 import java.util.Properties;
@@ -20,10 +21,15 @@ public class DataSourceUtil {
 	private static String password;
 	
 	static {
-		init();
+		try {
+			init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public static void init(){
+	public static void init() throws Exception{
 		Properties params=new Properties();
 		String configFile = AbstractBaseDaoImpl.getDomainPackage("crezyman.databaseConfigFileName").trim();
 		
@@ -35,17 +41,15 @@ public class DataSourceUtil {
 			e.printStackTrace();
 		}
 		
-		driver=params.getProperty("crezyman.driver").trim();
-		url=params.getProperty("crezyman.url").trim();
-		user=params.getProperty("crezyman.username").trim();
-		password=params.getProperty("crezyman.password").trim();
+		dataSource = DruidDataSourceFactory.createDataSource(params);
+
 	}   
 
 	public static Connection openConnection() throws SQLException {
 		Connection connection = null;
 		try {
 			Class.forName(driver);
-			connection = DriverManager.getConnection(url, user, password);
+			connection = dataSource.getConnection();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
