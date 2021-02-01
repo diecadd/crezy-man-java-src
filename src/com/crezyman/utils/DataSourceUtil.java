@@ -30,19 +30,15 @@ public class DataSourceUtil {
 	}
 	
 	public static void init() throws Exception{
-		Properties params=new Properties();
-		String configFile = AbstractBaseDaoImpl.getDomainPackage("crezyman.databaseConfigFileName").trim();
-		
-		
-		InputStream is=DataSourceUtil.class.getClassLoader().getResourceAsStream(configFile);
 		try {
+			Properties params=new Properties();
+			String configFile = AbstractBaseDaoImpl.getDomainPackage("crezyman.databaseConfigFileName").trim();
+			InputStream is=DataSourceUtil.class.getClassLoader().getResourceAsStream(configFile);
 			params.load(is);
+			dataSource = DruidDataSourceFactory.createDataSource(params);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		dataSource = DruidDataSourceFactory.createDataSource(params);
-
 	}   
 
 	public static Connection openConnection() throws SQLException {
